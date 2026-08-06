@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X7 Register</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+<div class="girl-box">
+<img src="girl.png" class="girl" alt="Girl">
+</div>
+
+<div class="glass">
+
+<div class="title">
+<h1>💜 X7 Register</h1>
+<p>ยินดีต้อนรับนะคะ~ มาสมัครอะไรหรอ?</p>
+</div>
+
+<div class="input-box">
+<label>👤 ชื่อ</label>
+<input type="text" id="name" placeholder="กรอกชื่อของคุณ">
+</div>
+
+<div class="input-box">
+<label>🎂 อายุ</label>
+<input type="number" id="age" placeholder="กรอกอายุ">
+</div>
+
+<div class="buttons">
+<button onclick="save()">💖 บันทึกข้อมูล</button>
+<button onclick="clearData()">🗑️ ล้างข้อมูล</button>
+</div>
+
+<div id="result" class="result">
+ยังไม่มีข้อมูล
+</div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
