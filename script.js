@@ -5,115 +5,141 @@ const result = document.getElementById("result");
 load();
 
 function load() {
-    const data = JSON.parse(localStorage.getItem("x7-user"));
 
-    if (!data) {
-        result.innerHTML = "💜 ยังไม่มีข้อมูล";
-        return;
-    }
+const data = JSON.parse(localStorage.getItem("x7-user"));
 
-    nameBox.value = data.name;
-    ageBox.value = data.age;
-    render(data);
-}
+if(!data){
 
-function save() {
-    const name = nameBox.value.trim();
-    const age = ageBox.value.trim();
+result.innerHTML="💜 ยังไม่มีข้อมูล";
 
-    if (!name || !age) {
-        toast("⚠️ กรุณากรอกข้อมูลให้ครบ");
-        return;
-    }
-
-    const data = { name, age };
-
-    localStorage.setItem("x7-user", JSON.stringify(data));
-
-    render(data);
-
-    toast("💖 บันทึกข้อมูลเรียบร้อย");
-}
-
-function render(data) {
-    result.innerHTML = `
-        <h3>✨ ข้อมูลของคุณ</h3>
-        <p>👤 ${data.name}</p>
-        <p>🎂 ${data.age} ปี</p>
-    `;
-}
-
-function clearData() {
-
-    if (!confirm("ล้างข้อมูลทั้งหมด?")) return;
-
-    localStorage.removeItem("x7-user");
-
-    nameBox.value = "";
-    ageBox.value = "";
-
-    result.innerHTML = "💜 ยังไม่มีข้อมูล";
-
-    toast("🗑️ ล้างข้อมูลแล้ว");
-}
-
-function toast(text) {
-
-    let t = document.createElement("div");
-
-    t.className = "toast";
-
-    t.innerText = text;
-
-    document.body.appendChild(t);
-
-    setTimeout(() => t.classList.add("show"), 10);
-
-    setTimeout(() => {
-
-        t.classList.remove("show");
-
-        setTimeout(() => t.remove(), 250);
-
-    }, 2200);
+return;
 
 }
 
-[nameBox, ageBox].forEach(input => {
+nameBox.value=data.name;
 
-    input.addEventListener("keydown", e => {
+ageBox.value=data.age;
 
-        if (e.key === "Enter") save();
+showData(data);
 
-    });
+}
+
+function save(){
+
+const name=nameBox.value.trim();
+
+const age=ageBox.value.trim();
+
+if(name===""||age===""){
+
+toast("⚠️ กรุณากรอกข้อมูลให้ครบ");
+
+return;
+
+}
+
+const data={name,age};
+
+localStorage.setItem("x7-user",JSON.stringify(data));
+
+showData(data);
+
+toast("💖 บันทึกข้อมูลสำเร็จ");
+
+}
+
+function clearData(){
+
+localStorage.removeItem("x7-user");
+
+nameBox.value="";
+
+ageBox.value="";
+
+result.innerHTML="💜 ยังไม่มีข้อมูล";
+
+toast("🗑️ ล้างข้อมูลแล้ว");
+
+}
+
+function showData(data){
+
+result.innerHTML=
+
+`👤 ${data.name}<br>🎂 ${data.age} ปี`;
+
+}
+
+function toast(text){
+
+const old=document.querySelector(".toast");
+
+if(old) old.remove();
+
+const div=document.createElement("div");
+
+div.className="toast";
+
+div.textContent=text;
+
+document.body.appendChild(div);
+
+requestAnimationFrame(()=>{
+
+div.classList.add("show");
 
 });
 
-document.querySelectorAll("button").forEach(btn => {
+setTimeout(()=>{
 
-    btn.addEventListener("click", e => {
+div.classList.remove("show");
 
-        btn.animate([
-            { transform: "scale(1)" },
-            { transform: "scale(.95)" },
-            { transform: "scale(1)" }
-        ], {
-            duration: 180,
-            easing: "ease-out"
-        });
+setTimeout(()=>{
 
-        let ripple = document.createElement("span");
+div.remove();
 
-        ripple.className = "ripple";
+},300);
 
-        ripple.style.left = e.offsetX + "px";
+},2200);
 
-        ripple.style.top = e.offsetY + "px";
+}
 
-        btn.appendChild(ripple);
+document.querySelectorAll("button").forEach(btn=>{
 
-        setTimeout(() => ripple.remove(), 600);
+btn.addEventListener("click",()=>{
 
-    });
+btn.animate(
+
+[
+
+{transform:"scale(1)"},
+
+{transform:"scale(.95)"},
+
+{transform:"scale(1)"}
+
+],
+
+{
+
+duration:180,
+
+easing:"ease-out"
+
+}
+
+);
+
+});
+
+});
+
+[nameBox,ageBox].forEach(input=>{
+
+input.addEventListener("keydown",e=>{
+
+if(e.key==="Enter") save();
+
+});
 
 });
